@@ -37,7 +37,6 @@ RUN apt-get -y install git \
     && ldconfig /usr/local/lib
 
 RUN apt-get -y install wget \
-    && apt-get build-dep curl \
     && wget http://curl.haxx.se/download/curl-$CURL_VERSION.tar.bz2 \
     && tar -xvjf curl-$CURL_VERSION.tar.bz2 \
     && cd curl-$CURL_VERSION \
@@ -46,35 +45,11 @@ RUN apt-get -y install wget \
     && make install \
     && ldconfig /usr/local/lib
 
-RUN apt-get -y purge \
-      build-essential \
-      autoconf \
-      automake \
-      autotools-dev \
-      cpp-5 \
-      debhelper \
-      g++-5 \
-      libstdc++-5-dev \
-      gcc-5 \
-      libgcc-5-dev \
-      intltool-debian \
-      make \
-      m4 \
-      patch \
-      python2.7 \
-      libpython2.7-minimal \
-      perl \
-      perl-modules-5.22 \
-      libp11-kit-dev \
-      libtasn1-6-dev \
-      nettle-dev \
-    && apt-get -y autoremove \
-    && rm -rf /tmp/*
-
 RUN curl --version
 RUN curl --http2 -I nghttp2.org
 
 RUN apt-get -y update && \
+	apt-get install -y libatomic1 && \
 	apt-get install -y --no-install-recommends apt-utils && \
 	apt-get -y install libpq-dev
 
